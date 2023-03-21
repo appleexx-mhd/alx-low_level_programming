@@ -2,7 +2,7 @@
 /**
  * print_alphabet_x10 - print 10 times the alphabet in lowercese
  */
-void printf_alphabet_x10(void)
+void print_alphabet_x10(void)
 {
 	char C = 'a';
 	int i = 0;
