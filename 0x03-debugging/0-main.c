@@ -1,15 +1,12 @@
 #include "main.h"
 /**
- * main - test a prototype functions
- *
- * Return: Always 0 (Succcess)
- */
+* main - Test function for positive or negative
+* Return: 0
+*/
 int main(void)
 {
-	int i;
-
-	i = 0;
-
-	positive_or_negative(i);
-	return (0);
+int i;
+i = 0;
+positive_or_negative(i);
+return (0);
 }
