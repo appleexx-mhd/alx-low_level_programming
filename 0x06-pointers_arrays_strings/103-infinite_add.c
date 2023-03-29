@@ -1,78 +1,51 @@
 #include "main.h"
-
+#include <stdio.h>
 /**
- * rev_string - reverse array
- * @n: integer params
- * Return: 0
- */
-
-void rev_string(char *n)
-{
-	int i = 0;
-	int j = 0;
-	char temp;
-
-	while (*(n + i) != '\0')
-	{
-		i++;
-	}
-	i--;
-
-	for (j = 0; j < i; j++, i--)
-	{
-		temp = *(n + j);
-		*(n + j) = *(n + i);
-		*(n + i) = temp;
-	}
-}
-
-/**
- * infinite_add - add 2 numbers together
- * @n1: text representation of 1st number to add
- * @n2: text representation of 2nd number to add
- * @r: pointer to buffer
- * @size_r: buffer size
- * Return: pointer to calling function
+ * infinite_add - Adds two numbers
+ * @n1: first input string
+ * @n2: second input string
+ * @r: pointer to buffer where result is stored
+ * @size_r: requested size for the buffer
+ * Return: pointer to buffer where result is stored
  */
 
 char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-	int overflow = 0, i = 0, j = 0, digits = 0;
-	int val1 = 0, val2 = 0, temp_tot = 0;
+	int i, j, n, len1, len2; /* i = iterator, n = carry over number */
 
-	while (*(n1 + i) != '\0')
-		i++;
-	while (*(n2 + j) != '\0')
-		j++;
-	i--;
-	j--;
-	if (j >= size_r || i >= size_r)
-		return (0);
-	while (j >= 0 || i >= 0 || overflow == 1)
+	for (len1 = 0; n1[len1] != '\0'; len1++)
+		;
+	for (len2 = 0; n2[len2] != '\0'; len2++)
+		;
+	if (size_r >= len1 || size_r >= len2)
+		if (len1 >= len2)
+			i = j = len2 - 1;
+		else
+			i = j = len1 - 1;
+	else
+		i = j = size_r;	
+	n = 0;
+	/* if first number >= 10, set the value to 1 and increase the buffer by 1.*/
+	if ((n1[0] - '0') + (n2[0] - '0') >= 10)
 	{
-		if (i < 0)
-			val1 = 0;
-		else
-			val1 = *(n1 + i) - '0';
-		if (j < 0)
-			val2 = 0;
-		else
-			val2 = *(n2 + j) - '0';
-		temp_tot = val1 + val2 + overflow;
-		if (temp_tot >= 10)
-			overflow = 1;
-		else
-			overflow = 0;
-		if (digits >= (size_r - 1))
-			return (0);
-		*(r + digits) = (temp_tot % 10) + '0';
-		digits++;
-		j--;
-		i--;
+		r[0] = 1 + '0';
+		j = 1;
 	}
-	if (digits == size_r)
-		return (0);
-	*(r + digits) = '\0';
-	rev_string(r);
+
+	while (i >= 0)
+	{
+		r[j] = (n1[i] - '0') + (n2[i] - '0') + n;
+		if (r[j] >= 10)
+		{
+			r[j] %= 10;
+			n = 1;
+		}
+		else
+			n = 0;
+		r[j] += '0';
+		i--;
+		j--;
+	}
+	r[size_r] = '\0';
 	return (r);
 }
