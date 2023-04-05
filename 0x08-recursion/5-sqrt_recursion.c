@@ -2,7 +2,7 @@
 int actual_sqrt_recursion(int n, int i);
 
 /**
- * -sqrt_recursion - function that returns the natural square root of number
+ * _sqrt_recursion - function that returns the natural square root of number
  *@n: input
  *Return: result
  */
