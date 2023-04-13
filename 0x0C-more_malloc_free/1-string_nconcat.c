@@ -1,49 +1,30 @@
 #include <stdlib.h>
-#include "main.h"
+#include <stdio.h>
 /**
- * *string_nconcat - concatenates n bytes of a string to another string
- * @s1: string to append to
- * @s2: string to concatenate from
- * @n: number of bytes from s2 to concatenate to s1
- * Return: pointer to the resulting string
+ * string_nconcat - concatenate two strings up to n bytes.
+ * @s1: source string
+ * @s2: string to truncate up to n bytes
+ * @n: number of bytes to truncate by
+ * Return: pointer to new buffer
  */
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
-	char *s;
-	unsigned int i;
-	unsigned int x;
-	unsigned int l1 = 0;
-	unsigned int l2 = 0;
+	char *x;
+	unsigned int count1, count2, sizeBuffer, i;
 
-	i = 0;
-	while (s1[i] != '\0')
-	{
-		l1++;
-		i++;
-	}
-	x = 0;
-	while (s2[x] != '\0')
-	{
-		l2++;
-		x++;
-	}
-	if (n < l2)
-		s = malloc(sizeof(char) * (l1 + n + 1));
-	else
-		s = malloc(sizeof(char) * (l1 + l2 + 1));
-	if (!s)
+	if (s1 == NULL)
+		s1 = "";
+	if (s2 == NULL)
+		s2 = "";
+	for (count1 = 0; s1[count1]; count1++);
+	for (count2 = 0; s2[count2]; count2++);
+	count2 > n ? (count2 = n) : (n = count2);
+	sizeBuffer = count1 + count2 + 1;
+	x = malloc(sizeBuffer * sizeof(char));
+	if (x == NULL)
 		return (NULL);
-	i = 0;
-	while (i < l1)
-	{
-		s[i] = s1[i];
-		i++;
-	}
-	x = 0;
-	while (n < l2 && i < (l1 + n))
-		s[i++] = s2[x++];
-	while (n >= l2 && i < (l2 + l1))
-		s[i++] = s2[x++];
-	s[i] = '\0';
-	return (s);
+	for (i = 0; i < sizeBuffer - 1; i++)
+		i < count1 ? (x[i] = s1[i]) : (x[i] = s2[i - count1]);
+	x[sizeBuffer] = '\0';
+	return (x);
 }
